@@ -1,0 +1,8 @@
+.cache/
+.dotnet/
+.vscode/
+AppData/
+*.log
+*.tmp
+node_modules/
+*.DS_Store
