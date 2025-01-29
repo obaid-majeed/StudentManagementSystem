@@ -1,0 +1,43 @@
+import java.io.*;
+
+// Add to the main menu:
+System.out.println("6. Save Data");
+System.out.println("7. Load Data");
+
+// Add to switch:
+case 6:
+    saveData();
+    break;
+case 7:
+    loadData();
+    break;
+
+// Add these methods:
+private static void saveData() {
+    try (FileWriter writer = new FileWriter("students.csv")) {
+        for (Student student : students) {
+            writer.write(student.getId() + "," + student.getName() + "," + student.getAge() + "\n");
+        }
+        System.out.println("Data saved to students.csv!");
+    } catch (IOException e) {
+        System.out.println("Error saving data: " + e.getMessage());
+    }
+}
+
+private static void loadData() {
+    try (BufferedReader reader = new BufferedReader(new FileReader("students.csv"))) {
+        students.clear();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(",");
+            int id = Integer.parseInt(data[0]);
+            String name = data[1];
+            int age = Integer.parseInt(data[2]);
+            students.add(new Student(id, name, age));
+            nextId = Math.max(nextId, id + 1);
+        }
+        System.out.println("Data loaded from students.csv!");
+    } catch (IOException e) {
+        System.out.println("Error loading data: " + e.getMessage());
+    }
+}
